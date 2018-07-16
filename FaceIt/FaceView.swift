@@ -14,6 +14,7 @@ class FaceView: UIView {
     let scaleFactor: CGFloat = 0.9
     let pathWidth: CGFloat = 5.0
     
+    
     private var skullCenter: CGPoint {
         return  CGPoint(x: bounds.midX, y: bounds.midY)
     }
@@ -44,7 +45,6 @@ class FaceView: UIView {
         )
         
         path.lineWidth = pathWidth
-        UIColor.blue.set()
         return path
     }
     
@@ -75,23 +75,38 @@ class FaceView: UIView {
         
         let mouthRect = CGRect(
             x: skullCenter.x - mouthWidth/2,
-            y: skullCenter.y + mouthOffset/2,
+            y: skullCenter.y + mouthOffset,
             width: mouthWidth,
             height: mouthHeight
         )
         
-        return UIBezierPath(rect: mouthRect)
+        let mouthCurvature = -1.0
+        
+        let smileOffset = CGFloat(max(-1, min(mouthCurvature, 1))) * mouthHeight
+        let start = CGPoint(x: mouthRect.minX, y: mouthRect.minY)
+        let end = CGPoint(x: mouthRect.maxX, y: mouthRect.minY)
+        let cp1 = CGPoint(x: mouthRect.minX + mouthWidth/3, y: mouthRect.minY + smileOffset)
+        let cp2 = CGPoint(x: mouthRect.maxX - mouthWidth/3, y: mouthRect.minY + smileOffset)
+        
+        let path = UIBezierPath()
+        path.move(to: start)
+        path.addCurve(to: end, controlPoint1: cp1, controlPoint2: cp2)
+        
+        path.lineWidth = pathWidth
+        
+        return path
         
     }
     
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     override func draw(_ rect: CGRect) {
+       
+        UIColor.blue.set()
         
         pathForCircleCenteredAtPoint(midPoint: skullCenter, withRadius: skullRadius).stroke()
         pathForEye(eye: .Left).stroke()
         pathForEye(eye: .Right).stroke()
-        
         pathForMouth().stroke()
         
     }
