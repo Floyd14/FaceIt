@@ -8,13 +8,16 @@
 
 import UIKit
 
+@IBDesignable
 class FaceView: UIView {
     
-    
-    let scaleFactor: CGFloat = 0.9
-    let pathWidth: CGFloat = 5.0
+    var scaleFactor: CGFloat = 0.9
+    var pathWidth: CGFloat = 5.0
+    var color: UIColor = UIColor.blue
     var mouthCurvature = 0.9
-
+    var eyeOpen = false
+    var eyeBrowTilt = -0.5
+    
     
     private var skullCenter: CGPoint {
         return  CGPoint(x: bounds.midX, y: bounds.midY)
@@ -29,6 +32,7 @@ class FaceView: UIView {
         static let SkullRadiusToMouthWidth: CGFloat = 1
         static let SkullRadiusToMouthHeight: CGFloat = 3
         static let SkullRadiusToMouthOffset: CGFloat = 3
+        static let SkullRadiusToBrowOffset: CGFloat = 3
     }
     
     private enum Eye {
@@ -53,9 +57,34 @@ class FaceView: UIView {
     private func pathForEye(eye: Eye) -> UIBezierPath {
         let eyeRadius = skullRadius / Ratios.SkullRadiusToEyeRadius
         let eyeCenter = getEyeCenter(eye: eye)
-        return pathForCircleCenteredAtPoint(midPoint: eyeCenter, withRadius: eyeRadius)
+        if eyeOpen {
+            return pathForCircleCenteredAtPoint(midPoint: eyeCenter, withRadius: eyeRadius)
+        } else {
+            let path = UIBezierPath()
+            path.move(to: CGPoint(x: eyeCenter.x - eyeRadius, y: eyeCenter.y))
+            path.addLine(to: CGPoint(x: eyeCenter.x + eyeRadius, y: eyeCenter.y))
+            path.lineWidth = pathWidth
+            return path
+        }
     }
     
+    private func pathForBrow(eye: Eye) -> UIBezierPath {
+        
+        var tilt = eyeBrowTilt
+        
+        switch eye {
+        case .Left: tilt *= -1
+        case .Right: break
+        }
+        
+        var browCenter = getEyeCenter(eye: eye)
+        browCenter.y = skullRadius / Ratios.SkullRadiusToBrowOffset
+        
+        let path = UIBezierPath()
+       // path.move(to: )
+        path.lineWidth = pathWidth
+        return path
+    }
     
     private func getEyeCenter(eye: Eye) -> CGPoint {
         let eyeOffset = skullRadius / Ratios.SkullRadiusToEyeOffset
@@ -101,7 +130,7 @@ class FaceView: UIView {
     // An empty implementation adversely affects performance during animation.
     override func draw(_ rect: CGRect) {
        
-        UIColor.blue.set()
+        color.set()
         
         pathForCircleCenteredAtPoint(midPoint: skullCenter, withRadius: skullRadius).stroke()
         pathForEye(eye: .Left).stroke()
