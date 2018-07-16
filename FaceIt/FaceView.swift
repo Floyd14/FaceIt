@@ -13,7 +13,8 @@ class FaceView: UIView {
     
     let scaleFactor: CGFloat = 0.9
     let pathWidth: CGFloat = 5.0
-    
+    var mouthCurvature = 0.9
+
     
     private var skullCenter: CGPoint {
         return  CGPoint(x: bounds.midX, y: bounds.midY)
@@ -79,8 +80,6 @@ class FaceView: UIView {
             width: mouthWidth,
             height: mouthHeight
         )
-        
-        let mouthCurvature = -1.0
         
         let smileOffset = CGFloat(max(-1, min(mouthCurvature, 1))) * mouthHeight
         let start = CGPoint(x: mouthRect.minX, y: mouthRect.minY)
