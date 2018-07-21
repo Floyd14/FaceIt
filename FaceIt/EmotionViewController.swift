@@ -10,7 +10,7 @@ import UIKit
 
 class EmotionViewController: UIViewController {
 
-    let emotionalsFaces: Dictionary<String, FacialExpression> = [
+    private let emotionalsFaces: Dictionary<String, FacialExpression> = [
         "sad": FacialExpression(eyes: .Open, eyeBrows: .Furrowed, mouth: .Frown),
         "worried": FacialExpression(eyes: .Open, eyeBrows: .Normal, mouth: .Neutral),
         "mischieviouse": FacialExpression(eyes: .Open, eyeBrows: .Furrowed, mouth: .Grin),
