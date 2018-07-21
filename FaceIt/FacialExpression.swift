@@ -49,6 +49,6 @@ struct FacialExpression {
     
     var eyes: Eyes
     var eyeBrows: EyeBrows
-    var mouth: Mouth
+    var mouth: Mouth 
     
 }

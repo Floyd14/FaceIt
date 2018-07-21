@@ -18,6 +18,16 @@ class FaceView: UIView {
     @IBInspectable var eyeOpen: Bool = true {didSet {setNeedsDisplay()}}
     @IBInspectable var eyeBrowTilt:Double = -0.3 {didSet {setNeedsDisplay()}}
     
+
+    @IBAction func changeScale(_ sender: UIPinchGestureRecognizer) {
+        switch sender.state {
+        case .changed, .ended:
+            scaleFactor *= sender.scale
+            sender.scale = 1.0
+        default:
+            break
+        }
+    }
     
     private var skullCenter: CGPoint {
         return  CGPoint(x: bounds.midX, y: bounds.midY)
