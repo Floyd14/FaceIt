@@ -37,7 +37,6 @@ class FaceViewController: UIViewController {
             faceView.addGestureRecognizer(UITapGestureRecognizer(
                 target: self, action: #selector(FaceViewController.toggleEyes)
             ))
-            
             updateUI()
         }
     }
@@ -77,13 +76,15 @@ class FaceViewController: UIViewController {
     ]
     
     private func updateUI() {
-        switch expression.eyes {
-        case .Open: faceView.eyeOpen = true
-        case .Closed: faceView.eyeOpen = false
-        case .Squinting: faceView.eyeOpen = false
+        if faceView != nil {
+            switch expression.eyes {
+            case .Open: faceView.eyeOpen = true
+            case .Closed: faceView.eyeOpen = false
+            case .Squinting: faceView.eyeOpen = false
+            }
+            faceView.mouthCurvature = mouthCurvatures[expression.mouth] ?? 0.0
+            faceView.eyeBrowTilt = eyeBrowTilt[expression.eyeBrows] ?? 0.0
         }
-        faceView.mouthCurvature = mouthCurvatures[expression.mouth] ?? 0.0
-        faceView.eyeBrowTilt = eyeBrowTilt[expression.eyeBrows] ?? 0.0
     }
     
     override func viewDidLoad() {

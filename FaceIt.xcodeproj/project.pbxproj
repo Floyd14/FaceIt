@@ -63,9 +63,9 @@
 				65DE4BED20FBD06600E807ED /* AppDelegate.swift */,
 				65DE4BEF20FBD06600E807ED /* FaceViewController.swift */,
 				65DE4C2F2103A6DB00E807ED /* EmotionViewController.swift */,
+				65DE4C2D20FFBE3900E807ED /* FacialExpression.swift */,
 				65DE4C0120FBD1BA00E807ED /* FaceView.swift */,
 				65DE4BF120FBD06600E807ED /* Main.storyboard */,
-				65DE4C2D20FFBE3900E807ED /* FacialExpression.swift */,
 			);
 			path = FaceIt;
 			sourceTree = "<group>";
